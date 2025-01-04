@@ -7,7 +7,7 @@ const layout = ({ children }: { children: ReactNode }) => {
   return (
     <div className="relative">
       <NavBar />
-      <div className="h-full min-h-[calc(100vh-610px)]">{children}</div>
+      <div className="">{children}</div>
       <Footer />
     </div>
   );
