@@ -24,12 +24,12 @@ const createNoopStorage = () => {
 
 const storage = typeof window !== "undefined" ? createWebStorage("local") : createNoopStorage();
 
-const persistConfig = {
+const persistAuthConfig = {
   key: "auth",
   storage,
 };
 
-const persistedAuthReducer = persistReducer(persistConfig, authReducer);
+const persistedAuthReducer = persistReducer(persistAuthConfig, authReducer);
 
 export const makeStore = () => {
   return configureStore({
