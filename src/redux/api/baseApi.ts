@@ -14,10 +14,10 @@ const baseQuery = fetchBaseQuery({
   baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
-    const token = (getState() as RootState).auth.token;
+    const access_token = (getState() as RootState).auth.access_token;
     headers.set("accept", "application/json");
-    if (token) {
-      headers.set("authorization", `Bearer ${token}`);
+    if (access_token) {
+      headers.set("authorization", `Bearer ${access_token}`);
     }
     return headers;
   },

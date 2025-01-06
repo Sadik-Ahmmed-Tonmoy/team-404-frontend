@@ -64,5 +64,6 @@ export const {
   useCreateExampleMutation,
   useGetAllExampleQuery,
   useGetSingleExampleQuery,
-  use,
+  useUpdateExampleMutation,
+  useDeleteExampleMutation,
 } = exampleApi;

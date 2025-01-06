@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -24,11 +23,9 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-  session,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-  session?: any;
-}>) {
+}) {
   return (
     <html lang="en">
       <body
@@ -36,7 +33,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <MyContextProvider>
-          <SessionProviderForNextAuth session={session}>
+          <SessionProviderForNextAuth>
             <ReduxStoreProvider>
               <Toaster />
               {children}

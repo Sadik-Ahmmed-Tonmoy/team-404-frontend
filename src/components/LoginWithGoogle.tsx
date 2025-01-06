@@ -9,11 +9,24 @@ const LoginWithGoogle = () => {
   console.log(session);
   return (
     <div>
-    
+      {session ? (
+        <div>
+          <p>Name: {session?.user?.name}</p>
+          <p>Email: {session?.user?.email}</p>
+          <p>Image:</p>{" "}
+          <Image
+            src={
+              session?.user?.image ||
+              "https://static1.srcdn.com/wordpress/wp-content/uploads/2024/10/untitled-design-2024-10-01t123706-515-1.jpg"
+            }
+            alt="image"
+            height={200}
+            width={200}
+          />
+        </div>
+      ) : (
         <button
-          onClick={() =>
-            signIn("google")
-          }
+          onClick={() => signIn("google")}
           className="relative w-full bg-blue-primary text-white py-2 px-4 rounded-md hover:bg-[#4285F4]/90 flex items-center justify-center"
         >
           <div className="absolute top-[3px] left-[3px] bg-white rounded-sm p-1">
@@ -21,12 +34,9 @@ const LoginWithGoogle = () => {
           </div>
           Sign up with Google
         </button>
+      )}
+
       <div>
-        {session && <div>
-          <p>Name: {session?.user?.name}</p>
-          <p>Email: {session?.user?.email}</p>
-          <p>Image:</p> <Image src={session?.user?.image || "https://static1.srcdn.com/wordpress/wp-content/uploads/2024/10/untitled-design-2024-10-01t123706-515-1.jpg"} alt="image" height={200} width={200}/></div>}
-        
         {session && <button onClick={() => signOut()}>Logout</button>}
         {!session && <p>You are not logged in</p>}
       </div>
