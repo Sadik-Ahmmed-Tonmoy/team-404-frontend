@@ -1,10 +1,11 @@
 import LoginWithGoogle from '@/components/LoginWithGoogle';
+import Banner from '@/components/pages/home/Banner/Banner';
 import React from 'react';
 
 const page = () => {
     return (
         <div>
-            home
+        <Banner/>
             <LoginWithGoogle/> 
         </div>
     );
