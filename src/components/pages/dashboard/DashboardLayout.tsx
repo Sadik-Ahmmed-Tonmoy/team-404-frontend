@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
+
 import MyFormInput from "@/components/ui/MyForm/MyFormInput/MyFormInput";
 import MyFormWrapper from "@/components/ui/MyForm/MyFormWrapper/MyFormWrapper";
 import { ContextProvider } from "@/lib/MyContextProvider";
 import { ConfigProvider, Drawer, Layout, Menu, Space, theme } from "antd";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ReactNode, useContext, useState, useEffect, useRef } from "react";
 import { BiLogOut, BiSearch } from "react-icons/bi";
 import { BsPerson } from "react-icons/bs";
@@ -19,15 +21,26 @@ import { RxDashboard } from "react-icons/rx";
 const { Header, Sider, Content } = Layout;
 
 const DashboardLayout = ({ children }: { children: ReactNode }) => {
+  const pathname = usePathname();
   const [isShowDrawer, setIsShowDrawer] = useState(false);
   const context = useContext(ContextProvider);
   const windowWidth = context ? context.windowWidth : 0;
   const isSmallScreen = windowWidth < 1024;
+
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
 
   const [activeKey, setActiveKey] = useState("");
+
+  useEffect(() => {
+    if (pathname.includes("/dashboard")) setActiveKey("1");
+    if (pathname.includes("/dashboard/test")) setActiveKey("2");
+    if (pathname.includes("/dashboard/purchase-history")) setActiveKey("3");
+    if (pathname.includes("/dashboard/profile")) setActiveKey("4");
+    if (pathname.includes("/dashboard/feedback")) setActiveKey("5");
+  }, [pathname]);
+
   const menuList = [
     {
       key: "1",
@@ -136,46 +149,45 @@ const DashboardLayout = ({ children }: { children: ReactNode }) => {
 
   return (
     <>
-      {/* mobile menu start */}
-      <>
-        <Drawer
-          title="Menu"
-          placement="left"
-          onClose={() => setIsShowDrawer(false)}
-          open={isShowDrawer}
-          closeIcon={false}
-          extra={
-            <Space>
-              <button onClick={() => setIsShowDrawer(false)}>
-                <IoClose className="hover:text-red-500 " size={25} />
-              </button>
-            </Space>
-          }
-        >
-          <ConfigProvider
-            theme={{
-              components: {
-                Menu: {
-                  itemSelectedBg: "#2280EE",
-                  itemSelectedColor: "white",
-                  itemHeight: 50,
-                },
+      {/* Mobile menu start */}
+      <Drawer
+        title="Menu"
+        placement="left"
+        onClose={() => setIsShowDrawer(false)}
+        open={isShowDrawer}
+        closeIcon={false}
+        extra={
+          <Space>
+            <button onClick={() => setIsShowDrawer(false)}>
+              <IoClose className="hover:text-red-500" size={25} />
+            </button>
+          </Space>
+        }
+      >
+        <ConfigProvider
+          theme={{
+            components: {
+              Menu: {
+                itemSelectedBg: "#2280EE",
+                itemSelectedColor: "white",
+                itemHeight: 50,
               },
-            }}
-          >
-            <Menu
-              theme="light"
-              mode="inline"
-              selectedKeys={[activeKey]}
-              onClick={handleMenuClick}
-              items={menuList}
-              className="!border-none"
-            />
-          </ConfigProvider>
-        </Drawer>
-      </>
-      {/* mobile menu end */}
-      <Layout className="h-[calc(100vh-0px)] ">
+            },
+          }}
+        >
+          <Menu
+            theme="light"
+            mode="inline"
+            selectedKeys={[activeKey]}
+            onClick={handleMenuClick}
+            items={menuList}
+            className="!border-none"
+          />
+        </ConfigProvider>
+      </Drawer>
+      {/* Mobile menu end */}
+
+      <Layout className="h-[calc(100vh-0px)]">
         <Header className="bg-white flex items-center justify-between px-3 lg:px-6 py-3 lg:py-0 h-fit">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between w-full">
             <div className="flex items-center gap-6">
@@ -210,7 +222,7 @@ const DashboardLayout = ({ children }: { children: ReactNode }) => {
 
               <div className="flex items-center gap-4">
                 <button
-                  className="relative  hover:bg-gray-100 rounded-full transition-colors"
+                  className="relative hover:bg-gray-100 rounded-full transition-colors"
                   aria-label="Notifications"
                 >
                   <IoNotificationsOutline className="h-7 w-7 text-gray-600" />
@@ -265,6 +277,7 @@ const DashboardLayout = ({ children }: { children: ReactNode }) => {
             </div>
           </div>
         </Header>
+
         <Layout>
           <div className="bg-white lg:border-t-[1px] lg:pt-9 overflow-hidden overflow-y-auto slim-scroll">
             {!isSmallScreen && (
@@ -301,11 +314,10 @@ const DashboardLayout = ({ children }: { children: ReactNode }) => {
             style={{
               margin: "16px 16px",
               padding: 24,
-              // minHeight: 280,
               background: colorBgContainer,
               borderRadius: borderRadiusLG,
             }}
-            className="overflow-hidden overflow-y-auto w-full h-[calc(100vh-92px)]"
+            className="overflow-hidden overflow-y-auto h-[calc(100vh-92px)]"
           >
             {children}
           </Content>
