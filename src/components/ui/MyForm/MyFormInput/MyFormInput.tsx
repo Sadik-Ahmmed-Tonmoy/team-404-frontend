@@ -13,7 +13,6 @@ const MyFormInput = ({
   inputClassName,
   placeHolder,
   value,
-  isPassword = false,
   onValueChange
 }: {
   type?: string;
@@ -23,7 +22,6 @@ const MyFormInput = ({
   inputClassName?: string;
   placeHolder?: string;
   value?: any;
-  isPassword?: boolean;
   onValueChange?: (newValue: any) => void;
 }) => {
   const { setValue, control } = useFormContext();
@@ -63,7 +61,7 @@ const MyFormInput = ({
             )}
             <Form.Item style={{ marginBottom: "0px" }}>
               {
-                isPassword ?  <Input.Password
+                type =="password" ?  <Input.Password
                 {...field}
                 type={type}
                 id={name}

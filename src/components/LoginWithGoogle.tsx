@@ -9,7 +9,7 @@ const LoginWithGoogle = () => {
   console.log(session);
   return (
     <div>
-      {session ? (
+      {/* {session ? (
         <div>
           <p>Name: {session?.user?.name}</p>
           <p>Email: {session?.user?.email}</p>
@@ -34,12 +34,20 @@ const LoginWithGoogle = () => {
           </div>
           Sign up with Google
         </button>
-      )}
+      )} */}
 
-      <div>
+      <button
+        onClick={() => signIn("google")}
+        className=" w-full py-2 px-4 rounded-md text-black border flex items-center justify-center gap-2"
+      >
+        <FcGoogle size={24} />
+        Sign up with Google
+      </button>
+
+      {/* <div>
         {session && <button onClick={() => signOut()}>Logout</button>}
         {!session && <p>You are not logged in</p>}
-      </div>
+      </div> */}
     </div>
   );
 };

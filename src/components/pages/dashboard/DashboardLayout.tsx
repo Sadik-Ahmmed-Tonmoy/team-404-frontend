@@ -1,22 +1,30 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client";
+'use client';
 
-import MyFormInput from "@/components/ui/MyForm/MyFormInput/MyFormInput";
-import MyFormWrapper from "@/components/ui/MyForm/MyFormWrapper/MyFormWrapper";
-import { ContextProvider } from "@/lib/MyContextProvider";
-import { ConfigProvider, Drawer, Layout, Menu, Space, theme } from "antd";
-import Image from "next/image";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { ReactNode, useContext, useState, useEffect, useRef, useMemo } from "react";
-import { BiLogOut, BiSearch } from "react-icons/bi";
-import { BsPerson } from "react-icons/bs";
-import { FiUser } from "react-icons/fi";
-import { IoClose, IoMenu, IoNotificationsOutline } from "react-icons/io5";
-import { MdKeyboardArrowDown, MdOutlineAnalytics } from "react-icons/md";
-import { PiStarThin } from "react-icons/pi";
-import { RiShoppingBag3Line } from "react-icons/ri";
-import { RxDashboard } from "react-icons/rx";
+import MyFormInput from '@/components/ui/MyForm/MyFormInput/MyFormInput';
+import MyFormWrapper from '@/components/ui/MyForm/MyFormWrapper/MyFormWrapper';
+import { ContextProvider } from '@/lib/MyContextProvider';
+import { ConfigProvider, Drawer, Layout, Menu, Space, theme } from 'antd';
+import Image from 'next/image';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import {
+  ReactNode,
+  useContext,
+  useState,
+  useEffect,
+  useRef,
+  useMemo,
+} from 'react';
+import { BiLogOut, BiSearch } from 'react-icons/bi';
+import { BsPerson } from 'react-icons/bs';
+import { FiUser } from 'react-icons/fi';
+import { IoClose, IoMenu, IoNotificationsOutline } from 'react-icons/io5';
+import { MdKeyboardArrowDown, MdOutlineAnalytics } from 'react-icons/md';
+import { PiStarThin } from 'react-icons/pi';
+import { RiShoppingBag3Line } from 'react-icons/ri';
+import { RxDashboard } from 'react-icons/rx';
 
 const { Header, Sider, Content } = Layout;
 
@@ -31,8 +39,8 @@ const DashboardLayout = ({ children }: { children: ReactNode }) => {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
 
-  const [activeKey, setActiveKey] = useState("");
-
+  const [activeKey, setActiveKey] = useState('');
+  
   const menuList = useMemo(() => [
     { key: "/dashboard", icon: <RxDashboard size={25} />, label: "Dashboard" },
     { key: "/dashboard/test", icon: <MdOutlineAnalytics size={25} />, label: "Tests" },
@@ -42,29 +50,28 @@ const DashboardLayout = ({ children }: { children: ReactNode }) => {
   ], []);
 
   // Dynamically render Menu items
-const renderMenuItems = () =>
-  menuList.map((item) => ({
-    key: item.key,
-    icon: item?.icon,
-    label: (
-      <Link href={item.key}>
-        <span
-          className={`${
-            activeKey === item?.key ? "text-white font-bold" : "text-text-light"
-          }`}
-        >
-          {item?.label}
-        </span>
-      </Link>
-    ),
-  }));
-
+  const renderMenuItems = () =>
+    menuList.map((item) => ({
+      key: item.key,
+      icon: item?.icon,
+      label: (
+        <Link href={item.key}>
+          <span
+            className={`${
+              activeKey === item?.key
+                ? 'text-white font-bold'
+                : 'text-text-light'
+            }`}
+          >
+            {item?.label}
+          </span>
+        </Link>
+      ),
+    }));
 
   useEffect(() => {
-    setActiveKey(menuList?.find((item) => item?.key == pathname)?.key || "")
+    setActiveKey(menuList?.find((item) => item?.key == pathname)?.key || '');
   }, [pathname, menuList]);
-
-
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -87,14 +94,14 @@ const renderMenuItems = () =>
       }
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
   return (
-    <>
+    <div className=''>
       {/* Mobile menu start */}
       <Drawer
         title="Menu"
@@ -114,8 +121,8 @@ const renderMenuItems = () =>
           theme={{
             components: {
               Menu: {
-                itemSelectedBg: "#2280EE",
-                itemSelectedColor: "white",
+                itemSelectedBg: '#2280EE',
+                itemSelectedColor: 'white',
                 itemHeight: 50,
               },
             },
@@ -126,7 +133,7 @@ const renderMenuItems = () =>
             mode="inline"
             selectedKeys={[activeKey]}
             onClick={handleMenuClick}
-          items={renderMenuItems()}
+            items={renderMenuItems()}
             className="!border-none"
           />
         </ConfigProvider>
@@ -134,7 +141,7 @@ const renderMenuItems = () =>
       {/* Mobile menu end */}
 
       <Layout className="h-[calc(100vh-0px)]">
-        <Header className="bg-white flex items-center justify-between px-3 lg:px-6 py-3 lg:py-0 h-fit">
+        <Header className="bg-white flex items-center justify-between px-3 lg:px-6 py-3 lg:py-0 h-fit ">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between w-full">
             <div className="flex items-center gap-6">
               {isSmallScreen && (
@@ -154,7 +161,7 @@ const renderMenuItems = () =>
               <MyFormWrapper onSubmit={handleSubmit}>
                 <div className="w-full relative">
                   <MyFormInput
-                    name={"search"}
+                    name={'search'}
                     placeHolder="Search test..."
                     inputClassName="ps-8"
                   />
@@ -237,8 +244,8 @@ const renderMenuItems = () =>
                   theme={{
                     components: {
                       Menu: {
-                        itemSelectedBg: "#2280EE",
-                        itemSelectedColor: "white",
+                        itemSelectedBg: '#2280EE',
+                        itemSelectedColor: 'white',
                         itemHeight: 50,
                       },
                     },
@@ -250,6 +257,7 @@ const renderMenuItems = () =>
                     selectedKeys={[activeKey]}
                     onClick={handleMenuClick}
                     items={renderMenuItems()}
+                       className="!border-none"
                   />
                 </ConfigProvider>
               </Sider>
@@ -258,18 +266,18 @@ const renderMenuItems = () =>
 
           <Content
             style={{
-              margin: "16px 16px",
-              padding: 24,
-              background: colorBgContainer,
+              // margin: '16px 16px',
+              // padding: 24,
+            //   background: colorBgContainer,
               borderRadius: borderRadiusLG,
             }}
-            className="overflow-hidden overflow-y-auto h-[calc(100vh-92px)]"
+            className="overflow-hidden overflow-y-auto h-[calc(100vh-92px)] md:p-4"
           >
             {children}
           </Content>
         </Layout>
       </Layout>
-    </>
+    </div>
   );
 };
 

@@ -1,14 +1,12 @@
-
-import Footer from "@/components/shared/Footer/Footer";
-import NavBar from "@/components/shared/NavBar/NavBar";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 
 const layout = ({ children }: { children: ReactNode }) => {
   return (
-    <div className="relative">
-      <NavBar />
-      <div className="">{children}</div>
-      <Footer />
+    <div>
+      <h3 className="w-full bg-white py-3 text-2xl text-center">
+        Hamnat-Probetest.de
+      </h3>
+      <div className="bg-[#F3F4F8]">{children}</div>
     </div>
   );
 };

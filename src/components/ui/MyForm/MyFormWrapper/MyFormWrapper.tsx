@@ -48,9 +48,9 @@ const MyFormWrapper = ({
             activeBorderColor: "#69735d",
           },
           Checkbox: {
-            colorBorder: "#1BB68A",
-            colorPrimary: "#1BB68A",
-            colorPrimaryHover: "#1BB68A",
+            colorBorder: "#2078e0",
+            colorPrimary: "#2078e0",
+            colorPrimaryHover: "#2078e0",
           },
           DatePicker: {
             colorPrimary: "#7F56D9",
