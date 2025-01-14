@@ -8,7 +8,7 @@ import { ConfigProvider, Drawer, Layout, Menu, Space, theme } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ReactNode, useContext, useState, useEffect, useRef } from "react";
+import { ReactNode, useContext, useState, useEffect, useRef, useMemo } from "react";
 import { BiLogOut, BiSearch } from "react-icons/bi";
 import { BsPerson } from "react-icons/bs";
 import { FiUser } from "react-icons/fi";
@@ -33,91 +33,38 @@ const DashboardLayout = ({ children }: { children: ReactNode }) => {
 
   const [activeKey, setActiveKey] = useState("");
 
-  useEffect(() => {
-    if (pathname.includes("/dashboard")) setActiveKey("1");
-    if (pathname.includes("/dashboard/test")) setActiveKey("2");
-    if (pathname.includes("/dashboard/purchase-history")) setActiveKey("3");
-    if (pathname.includes("/dashboard/profile")) setActiveKey("4");
-    if (pathname.includes("/dashboard/feedback")) setActiveKey("5");
-  }, [pathname]);
+  const menuList = useMemo(() => [
+    { key: "/dashboard", icon: <RxDashboard size={25} />, label: "Dashboard" },
+    { key: "/dashboard/test", icon: <MdOutlineAnalytics size={25} />, label: "Tests" },
+    { key: "/dashboard/purchase-history", icon: <RiShoppingBag3Line size={25} />, label: "Purchase History" },
+    { key: "/dashboard/profile", icon: <BsPerson size={25} />, label: "Profile" },
+    { key: "/dashboard/feedback", icon: <PiStarThin size={25} />, label: "Feedback" },
+  ], []);
 
-  const menuList = [
-    {
-      key: "1",
-      icon: <RxDashboard size={25} className="text-text-light" />,
-      label: (
-        <Link href={"/dashboard"}>
-          <span
-            className={`${
-              activeKey === "1" ? "text-white font-bold" : "text-text-light"
-            }`}
-          >
-            Dashboard
-          </span>
-        </Link>
-      ),
-    },
-    {
-      key: "2",
-      icon: <MdOutlineAnalytics size={25} />,
-      label: (
-        <Link href={"/dashboard/test"}>
-          <span
-            className={`${
-              activeKey === "2" ? "text-white font-bold" : "text-text-light"
-            }`}
-          >
-            Tests
-          </span>
-        </Link>
-      ),
-    },
-    {
-      key: "3",
-      icon: <RiShoppingBag3Line size={25} />,
-      label: (
-        <Link href={"/dashboard/purchase-history"}>
-          <span
-            className={`${
-              activeKey === "3" ? "text-white font-bold" : "text-text-light"
-            }`}
-          >
-            Purchase History
-          </span>
-        </Link>
-      ),
-    },
-    {
-      key: "4",
-      icon: <BsPerson size={25} />,
-      label: (
-        <Link href={"/dashboard/profile"}>
-          <span
-            className={`${
-              activeKey === "4" ? "text-white font-bold" : "text-text-light"
-            }`}
-          >
-            Profile
-          </span>
-        </Link>
-      ),
-    },
-    {
-      key: "5",
-      icon: <PiStarThin size={25} />,
-      label: (
-        <Link href={"/dashboard/feedback"}>
-          <span
-            className={`${
-              activeKey === "5" ? "text-white font-bold" : "text-text-light"
-            }`}
-          >
-            Feedback
-          </span>
-        </Link>
-      ),
-    },
-  ];
+  // Dynamically render Menu items
+const renderMenuItems = () =>
+  menuList.map((item) => ({
+    key: item.key,
+    icon: item?.icon,
+    label: (
+      <Link href={item.key}>
+        <span
+          className={`${
+            activeKey === item?.key ? "text-white font-bold" : "text-text-light"
+          }`}
+        >
+          {item?.label}
+        </span>
+      </Link>
+    ),
+  }));
+
+
+  useEffect(() => {
+    setActiveKey(menuList?.find((item) => item?.key == pathname)?.key || "")
+  }, [pathname, menuList]);
+
+
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -180,7 +127,7 @@ const DashboardLayout = ({ children }: { children: ReactNode }) => {
             mode="inline"
             selectedKeys={[activeKey]}
             onClick={handleMenuClick}
-            items={menuList}
+          items={renderMenuItems()}
             className="!border-none"
           />
         </ConfigProvider>
@@ -303,7 +250,7 @@ const DashboardLayout = ({ children }: { children: ReactNode }) => {
                     mode="inline"
                     selectedKeys={[activeKey]}
                     onClick={handleMenuClick}
-                    items={menuList}
+                    items={renderMenuItems()}
                   />
                 </ConfigProvider>
               </Sider>
