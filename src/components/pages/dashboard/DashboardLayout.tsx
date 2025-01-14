@@ -75,7 +75,6 @@ const renderMenuItems = () =>
 
   const handleSubmit = async (formData: any, reset: any) => {
     console.log(formData, reset);
-    // Add your logic for form submission here
   };
 
   useEffect(() => {
