@@ -69,19 +69,15 @@ const DashboardLayout = ({ children }: { children: ReactNode }) => {
       ),
     }));
 
-  useEffect(() => {
-    const selectedMenu = menuList?.find((item) => item?.key == pathname)?.key;
-    if (selectedMenu) {
-      setActiveKey(selectedMenu);
-    } else {
-      const selectedMenu = menuList?.find((item) =>
-        pathname?.includes(item?.key)
-      )?.key;
+    useEffect(() => {
+      const sortedMenuList = [...menuList].sort((a, b) => b.key.length - a.key.length);
+    
+      const selectedMenu = sortedMenuList.find((item) => pathname?.startsWith(item?.key))?.key;
+    
       if (selectedMenu) {
         setActiveKey(selectedMenu);
       }
-    }
-  }, [pathname, menuList]);
+    }, [pathname, menuList]);
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
