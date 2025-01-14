@@ -40,7 +40,7 @@ const DashboardLayout = ({ children }: { children: ReactNode }) => {
   } = theme.useToken();
 
   const [activeKey, setActiveKey] = useState('');
-  
+
   const menuList = useMemo(() => [
     { key: "/dashboard", icon: <RxDashboard size={25} />, label: "Dashboard" },
     { key: "/dashboard/test", icon: <MdOutlineAnalytics size={25} />, label: "Tests" },
@@ -70,7 +70,17 @@ const DashboardLayout = ({ children }: { children: ReactNode }) => {
     }));
 
   useEffect(() => {
-    setActiveKey(menuList?.find((item) => item?.key == pathname)?.key || '');
+    const selectedMenu = menuList?.find((item) => item?.key == pathname)?.key;
+    if (selectedMenu) {
+      setActiveKey(selectedMenu);
+    } else {
+      const selectedMenu = menuList?.find((item) =>
+        pathname?.includes(item?.key)
+      )?.key;
+      if (selectedMenu) {
+        setActiveKey(selectedMenu);
+      }
+    }
   }, [pathname, menuList]);
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
