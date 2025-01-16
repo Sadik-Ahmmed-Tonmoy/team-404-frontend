@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 
 const layout = ({ children }: { children: ReactNode }) => {
   return (
-    <div>
+    <div> 
       <h3 className="w-full bg-white py-3 text-2xl text-center">
         Hamnat-Probetest.de
       </h3>
